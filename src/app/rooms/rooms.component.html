@@ -1,0 +1,28 @@
+<!-- <h1>Rooms Section</h1> -->
+
+<hinv-header></hinv-header>
+<hinv-header></hinv-header>
+<hinv-header></hinv-header>
+<hinv-header></hinv-header>
+
+<div *ngIf="hiddenRooms">
+    <h2>Welcome to {{hotelName}}</h2>
+    <h3>Number of free rooms : <span [innerHTML]="numberOfRooms"></span></h3>
+</div>
+
+<div *ngIf="selectedRoom">
+    Price Room Selected : {{selectedRoom.rating}}
+</div>
+
+<button class="btn btn-warning" (click)="addRoom()">Add Room</button>
+<br/>
+<br/>
+<div *ngIf="hiddenRooms">
+    <hinv-rooms-list [rooms]="roomsList"
+     (selectedRoom)="selectRoom($event)"
+     [roomsListTitle]="roomListTitle"></hinv-rooms-list>
+</div>
+<br/>
+<button class="btn btn-danger" (click)="togle()">Togle Rooms</button>
+
+
