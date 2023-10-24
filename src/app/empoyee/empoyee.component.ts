@@ -12,7 +12,7 @@ export class EmpoyeeComponent implements OnInit {
   
   employeeName:string = 'Alex';
 
-  constructor(@Self() private roomService:RoomsService){}
+  constructor(@Self() private roomsService:RoomsService){}
 
   ngOnInit(): void {
     

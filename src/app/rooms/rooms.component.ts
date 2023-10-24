@@ -1,8 +1,8 @@
-import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, OnInit, QueryList, SkipSelf, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnInit, QueryList, SkipSelf, ViewChild, ViewChildren } from '@angular/core';
 import { RoomList, Room } from './rooms';
 import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './rooms-services/rooms.service';
-
+import { Observable } from 'rxjs';
 @Component({
   selector: 'hinv-rooms',
   templateUrl: './rooms.component.html',
@@ -20,6 +20,15 @@ export class RoomsComponent implements OnInit,AfterViewInit,AfterViewChecked {
   public roomsList: RoomList[] = [];
   selectedRoom!: RoomList;
   roomListTitle: string = 'Rooms List';
+
+  stream = new Observable<string>(observer => {
+    observer.next('user1');
+    observer.next('user2');
+    observer.next('user3');
+    observer.next('user4');
+    observer.complete();
+    observer.error('Observer Error');
+  });
 
   // acces one component
   @ViewChild(HeaderComponent,{static : false}) headerComponent!: HeaderComponent;
@@ -53,7 +62,20 @@ export class RoomsComponent implements OnInit,AfterViewInit,AfterViewChecked {
   }
 
   ngOnInit(): void {
-    this.roomsList = this.roomsService.getRooms();
+     this.roomsService.getRooms()
+                      .subscribe(rooms=>{
+                                          this.roomsList = rooms
+                                        });
+
+    this.stream.subscribe({
+      next:(value) => console.log(value),
+      complete: ()=>console.log('complete'),
+      error:(err)=> console.log(err)
+    });
+
+    this.roomsService.getPhotos().subscribe(data =>{
+      console.log(data);
+    });
   }
 
   togle() {
@@ -65,6 +87,40 @@ export class RoomsComponent implements OnInit,AfterViewInit,AfterViewChecked {
   }
 
   addRoom() {
-   this.roomsList = this.roomsService.addRoom();
+  const room:RoomList = {
+    //roomNumber: '4',
+    roomType: 'Deluxe Room',
+    amentities: 'Air Conditioner, Free Wi-Fi, TV, Bathroom, Kitchen',
+    price: 340,
+    photos:
+      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    checkinTime: new Date('11-Nov-2021'),
+    checkoutTime: new Date('12-Nov-2021'),
+    rating: 4.9,
+  };
+  
+   this.roomsService.addRoom(room).subscribe(data => this.roomsList = data);
   }
+
+  editRoom(){
+    const room:RoomList = {
+      roomNumber: '2',
+      roomType: 'Normal Room',
+      amentities: 'Air Conditioner, Free Wi-Fi, TV, Bathroom, Kitchen',
+      price: 40,
+      photos:
+        'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+      checkinTime: new Date('11-Nov-2021'),
+      checkoutTime: new Date('12-Nov-2021'),
+      rating: 2.3,
+    };
+
+    this.roomsService.editRoom(room).subscribe(data => this.roomsList = data);
+    
+  }
+
+  deleteRoom(){
+    this.roomsService.deleteRoom('1').subscribe(data => this.roomsList = data);
+  }
+
 }

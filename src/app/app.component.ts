@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Optional, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, Optional, ViewChild, ViewContainerRef } from '@angular/core';
 import { RoomsComponent } from './rooms/rooms.component';
 import { LoggerService } from './logger.service';
+import { LOCAL_STORAGE_TOKEN } from './localstorage.token';
 
 @Component({
   selector: 'hinv-root',
@@ -13,11 +14,17 @@ export class AppComponent implements AfterViewInit,OnInit {
   role ='Admin' ;
   @ViewChild('divRef', {static: true}) divRef!: ElementRef
 
-  constructor(@Optional() private loggerService:LoggerService){}
+  constructor(@Optional() private loggerService:LoggerService,
+  @Inject(LOCAL_STORAGE_TOKEN) private localStorage:Storage){
+
+  }
 
   ngOnInit(): void {
     this.divRef.nativeElement.innerText = "Text from App Component";
     this.loggerService?.log('AppComponent.OmInit()');
+    this.localStorage.setItem('Name','Alex');
+     let localName = this.localStorage.getItem('Name');
+     console.log(localName);
   }
   ngAfterViewInit(): void {
     

@@ -14,10 +14,12 @@
     Price Room Selected : {{selectedRoom.rating}}
 </div>
 
-<button class="btn btn-warning" (click)="addRoom()">Add Room</button>
+<button class="btn btn-info" (click)="addRoom()">Add Room</button>
+<button class="btn btn-success" (click)="editRoom()">Edit Room</button>
+<button class="btn btn-danger" (click)="deleteRoom()">Delete Room</button>
 <br/>
 <br/>
-<div *ngIf="hiddenRooms">
+<div *ngIf="!hiddenRooms">
     <hinv-rooms-list [rooms]="roomsList"
      (selectedRoom)="selectRoom($event)"
      [roomsListTitle]="roomListTitle"></hinv-rooms-list>
