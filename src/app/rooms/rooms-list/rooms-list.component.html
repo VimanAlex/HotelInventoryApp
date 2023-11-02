@@ -26,7 +26,8 @@
             <td>{{room.checkoutTime | date : "fullDate"}}</td>
             <td>{{room.rating | number : "1.2-4"}}</td>
             <td>
-                <button class="btn btn-warning" (click)="selectRoom(room)">Select</button>
+                <!-- <button class="btn btn-warning" (click)="selectRoom(room)">Select</button> -->
+                <button class="btn btn-warning" [routerLink]="['/rooms',room.roomNumber]">Book Room</button>
             </td>
         </tr>
     </table>

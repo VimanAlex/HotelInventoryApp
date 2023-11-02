@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http'
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +11,22 @@ import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
 import { EmpoyeeComponent } from './empoyee/empoyee.component';
 import { APP_CONFIG, APP_SERVICE_CONFIG } from './AppConfig/appconfig.service';
+import { RequestInterceptor } from './request.interceptor';
+import { InitService } from './init.service';
+import { NavComponent } from './nav/nav.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { NotfoundComponent } from './notfound/notfound.component';
+import { RoomBookingComponent } from './rooms/room-booking/room-booking.component';
+import { RoomAddComponent } from './rooms/room-add/room-add.component';
+import { FormsModule } from '@angular/forms';
+
+function initFactory(initService:InitService){
+  return ()=> initService.init();
+}
 
 @NgModule({
   declarations: [
@@ -19,19 +35,40 @@ import { APP_CONFIG, APP_SERVICE_CONFIG } from './AppConfig/appconfig.service';
     RoomListComponent,
     HeaderComponent,
     ContainerComponent,
-    EmpoyeeComponent
+    EmpoyeeComponent,
+    NavComponent,
+    NotfoundComponent,
+    RoomBookingComponent,
+    RoomAddComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    FormsModule
     
   ],
   providers: [
     {
       provide:APP_SERVICE_CONFIG,
       useValue : APP_CONFIG
+    },
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:RequestInterceptor,
+      multi:true
+    },
+    {
+      provide:APP_INITIALIZER,
+      useFactory: initFactory,
+      deps:[InitService],
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

@@ -1,14 +1,15 @@
-import { AfterViewChecked, AfterViewInit, Component, OnInit, QueryList, SkipSelf, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit, QueryList, SkipSelf, ViewChild, ViewChildren } from '@angular/core';
 import { RoomList, Room } from './rooms';
 import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './rooms-services/rooms.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject, Subscription, catchError, map, of } from 'rxjs';
+import { HttpEventType } from '@angular/common/http';
 @Component({
   selector: 'hinv-rooms',
   templateUrl: './rooms.component.html',
   styleUrls: ['./rooms.component.scss'],
 })
-export class RoomsComponent implements OnInit,AfterViewInit,AfterViewChecked {
+export class RoomsComponent implements OnInit,AfterViewInit,AfterViewChecked, OnDestroy {
   public hotelName: string = 'Continental Hotel';
   public numberOfRooms: number = 20;
   public hiddenRooms: boolean = false;
@@ -17,9 +18,25 @@ export class RoomsComponent implements OnInit,AfterViewInit,AfterViewChecked {
     availableRooms: 15,
     bookedRooms: 5,
   };
-  public roomsList: RoomList[] = [];
+  roomsList: RoomList[] | null = [];
   selectedRoom!: RoomList;
   roomListTitle: string = 'Rooms List';
+  totalBytes:number = 0;
+  subscription! : Subscription
+
+  error$ = new Subject<string>();
+
+  getError$ = this.error$.asObservable();
+  rooms$ = this.roomsService.getRooms$.pipe(
+    catchError(err=>{
+      this.error$.next(err.message);
+      return of([]);
+    })
+  )
+
+  countRooms$ = this.roomsService.getRooms$.pipe(
+    map(rooms => rooms.length)
+  )
 
   stream = new Observable<string>(observer => {
     observer.next('user1');
@@ -62,7 +79,7 @@ export class RoomsComponent implements OnInit,AfterViewInit,AfterViewChecked {
   }
 
   ngOnInit(): void {
-     this.roomsService.getRooms()
+    this.roomsService.getRooms()
                       .subscribe(rooms=>{
                                           this.roomsList = rooms
                                         });
@@ -73,8 +90,21 @@ export class RoomsComponent implements OnInit,AfterViewInit,AfterViewChecked {
       error:(err)=> console.log(err)
     });
 
-    this.roomsService.getPhotos().subscribe(data =>{
-      console.log(data);
+    this.roomsService.getPhotos().subscribe((event) =>{
+      
+      switch(event.type){
+        case HttpEventType.Sent:{
+          console.log('Request has benn made !');
+          break;
+        }
+        case HttpEventType.ResponseHeader : {
+          console.log('Request succes!');
+          break;
+        }
+        case HttpEventType.DownloadProgress:{
+          this.totalBytes += event.loaded;
+        }
+      }
     });
   }
 
@@ -121,6 +151,12 @@ export class RoomsComponent implements OnInit,AfterViewInit,AfterViewChecked {
 
   deleteRoom(){
     this.roomsService.deleteRoom('1').subscribe(data => this.roomsList = data);
+  }
+
+  ngOnDestroy(){
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
 }

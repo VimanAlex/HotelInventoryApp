@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, Inject, OnInit, Optional, ViewChi
 import { RoomsComponent } from './rooms/rooms.component';
 import { LoggerService } from './logger.service';
 import { LOCAL_STORAGE_TOKEN } from './localstorage.token';
+import { InitService } from './init.service';
 
 @Component({
   selector: 'hinv-root',
@@ -15,12 +16,14 @@ export class AppComponent implements AfterViewInit,OnInit {
   @ViewChild('divRef', {static: true}) divRef!: ElementRef
 
   constructor(@Optional() private loggerService:LoggerService,
-  @Inject(LOCAL_STORAGE_TOKEN) private localStorage:Storage){
-
+  @Inject(LOCAL_STORAGE_TOKEN) private localStorage:Storage,
+  private initService:InitService
+  ){
+    console.log(initService.config);
   }
 
   ngOnInit(): void {
-    this.divRef.nativeElement.innerText = "Text from App Component";
+    // this.divRef.nativeElement.innerText = "Text from App Component";
     this.loggerService?.log('AppComponent.OmInit()');
     this.localStorage.setItem('Name','Alex');
      let localName = this.localStorage.getItem('Name');

@@ -1,9 +1,6 @@
 <!-- <h1>Rooms Section</h1> -->
 
 <hinv-header></hinv-header>
-<hinv-header></hinv-header>
-<hinv-header></hinv-header>
-<hinv-header></hinv-header>
 
 <div *ngIf="hiddenRooms">
     <h2>Welcome to {{hotelName}}</h2>
@@ -19,12 +16,21 @@
 <button class="btn btn-danger" (click)="deleteRoom()">Delete Room</button>
 <br/>
 <br/>
-<div *ngIf="!hiddenRooms">
-    <hinv-rooms-list [rooms]="roomsList"
+
+<div>
+   <!-- Error :  {{getError$ | async}} -->
+   Number of rooms : {{countRooms$ | async}}
+</div>
+<div *ngIf="rooms$ | async as rooms">
+    <hinv-rooms-list [rooms]="rooms"
      (selectedRoom)="selectRoom($event)"
-     [roomsListTitle]="roomListTitle"></hinv-rooms-list>
+     [roomsListTitle]="roomListTitle">
+    </hinv-rooms-list>
 </div>
 <br/>
 <button class="btn btn-danger" (click)="togle()">Togle Rooms</button>
+<div>
+   <h4>Total records : {{totalBytes}}</h4> 
+</div>
 
 

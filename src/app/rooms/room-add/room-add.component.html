@@ -1,0 +1,74 @@
+<h2>Add Room Page</h2>
+<div *ngIf="successMessage !== ''" class="alert alert-success">
+    {{successMessage}}
+    {{roomForm.valid}}
+
+</div>
+
+<form #roomForm = "ngForm" style="max-width: 900px;" (ngSubmit)="AddRoom()">
+    <div class="form-group">
+        <div class="alert alert-danger" *ngIf="roomType.errors?.['minlength']">
+            Room Type should have min 3 chars 
+       </div>
+
+       <div class="alert alert-warning" *ngIf="isValidRoomType()">
+        Room Type is require max 20 letters
+       </div>
+        <label>Room Type</label>
+        <input class="form-control" 
+               #roomType = "ngModel"
+               type="text" 
+               name="roomType" 
+               [(ngModel)]="roomModel.roomType" 
+               required
+               minlength="3"
+               maxlength="20"
+               />             
+    </div>
+
+    <div class="form-group">
+        <label>Amentities</label>
+        <input class="form-control" type="text" name="amentities" [(ngModel)]="roomModel.amentities"/>
+    </div>
+
+    <div class="form-group">
+        <label>Room price per night</label>
+        <input class="form-control" type="number" name="price" [(ngModel)]="roomModel.price"/>
+    </div>
+
+    <div class="form-group">
+        <label>Photos(Provide link)</label>
+        <input class="form-control" type="text" name="photos" [(ngModel)]="roomModel.photos"/>
+    </div>
+
+    <div class="form-group">
+        <label>Check-in Time</label>
+        <input class="form-control" type="datetime" name="checkinTime" [(ngModel)]="roomModel.checkinTime"/>
+    </div>
+
+    <div class="form-group">
+        <label>Check-out Time</label>
+        <input class="form-control" type="datetime" name="checkoutTime" [(ngModel)]="roomModel.checkoutTime"/>
+    </div>
+
+    <div class="form-group">
+        <label>Rating</label>
+
+        <input class="form-control" 
+               #roomRating = "ngModel"
+               type="number" 
+               name="rating" 
+               [(ngModel)]="roomModel.rating"
+               min="1"
+               max="5"
+               />
+    </div>
+
+    <div> 
+        <button [disabled]="roomForm.invalid" class="btn btn-success" type="submit">Save Room</button>
+    </div>
+</form>
+
+
+
+
