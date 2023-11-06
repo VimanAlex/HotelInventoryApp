@@ -5,13 +5,15 @@ import { RoomsComponent } from './rooms/rooms.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { RoomBookingComponent } from './rooms/room-booking/room-booking.component';
 import { RoomAddComponent } from './rooms/room-add/room-add.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {path:'employee',component: EmpoyeeComponent},
   {path:'rooms', component: RoomsComponent},
   {path:'rooms/:id',component:RoomBookingComponent},
   {path:'room/add',component:RoomAddComponent},
-  {path:'', redirectTo:'/rooms',pathMatch:'full'}, // default path
+  {path:'login',component:LoginComponent},
+  {path:'', redirectTo:'/login',pathMatch:'full'}, // default path
   {path:'**',component:NotfoundComponent}
   
 ];

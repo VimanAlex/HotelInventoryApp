@@ -5,15 +5,13 @@
 
 </div>
 
-<form #roomForm = "ngForm" style="max-width: 900px;" (ngSubmit)="AddRoom()">
+<form #roomForm = "ngForm" style="max-width: 900px;" (ngSubmit)="AddRoom(roomForm)">
     <div class="form-group">
         <div class="alert alert-danger" *ngIf="roomType.errors?.['minlength']">
             Room Type should have min 3 chars 
        </div>
 
-       <div class="alert alert-warning" *ngIf="isValidRoomType()">
-        Room Type is require max 20 letters
-       </div>
+      
         <label>Room Type</label>
         <input class="form-control" 
                #roomType = "ngModel"
@@ -23,12 +21,25 @@
                required
                minlength="3"
                maxlength="20"
+               pattern=""  
                />             
     </div>
 
     <div class="form-group">
-        <label>Amentities</label>
-        <input class="form-control" type="text" name="amentities" [(ngModel)]="roomModel.amentities"/>
+        <div *ngIf="roomAmenities.dirty && roomAmenities.errors?.['required']">
+           <span style="color: red;">Amenities field is mandatory !</span> 
+        </div>
+        <div *ngIf="roomAmenities.pristine">
+            Please add amenities
+        </div>
+
+        <label>Amenities</label>
+        <input class="form-control" 
+               type="text" 
+               name="amentities" 
+               [(ngModel)]="roomModel.amentities"
+               #roomAmenities = "ngModel"
+               required/>
     </div>
 
     <div class="form-group">
