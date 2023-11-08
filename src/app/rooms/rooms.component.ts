@@ -4,6 +4,7 @@ import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './rooms-services/rooms.service';
 import { Observable, Subject, Subscription, catchError, map, of } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
+import { ConfigService } from '../services/config.service';
 @Component({
   selector: 'hinv-rooms',
   templateUrl: './rooms.component.html',
@@ -54,7 +55,7 @@ export class RoomsComponent implements OnInit,AfterViewInit,AfterViewChecked, On
   @ViewChildren(HeaderComponent) headerChildrenComp!:QueryList<HeaderComponent>;
   
 
-  constructor(@SkipSelf() private roomsService:RoomsService) {}
+  constructor(@SkipSelf() private roomsService:RoomsService,private serviceConfig:ConfigService) {}
 
   ngAfterViewChecked(): void {
     throw new Error('Method not implemented.');
@@ -79,6 +80,8 @@ export class RoomsComponent implements OnInit,AfterViewInit,AfterViewChecked, On
   }
 
   ngOnInit(): void {
+
+    console.log(this.serviceConfig);
     this.roomsService.getRooms()
                       .subscribe(rooms=>{
                                           this.roomsList = rooms

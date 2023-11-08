@@ -11,7 +11,9 @@
     Price Room Selected : {{selectedRoom.rating}}
 </div>
 
-<button class="btn btn-info" (click)="addRoom()">Add Room</button>
+<router-outlet></router-outlet>
+
+<button class="btn btn-info" [routerLink]="['add']">Add Room</button>
 <button class="btn btn-success" (click)="editRoom()">Edit Room</button>
 <button class="btn btn-danger" (click)="deleteRoom()">Delete Room</button>
 <br/>
