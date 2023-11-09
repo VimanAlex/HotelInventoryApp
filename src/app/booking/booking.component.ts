@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'hinv-booking',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./booking.component.scss']
 })
 export class BookingComponent {
+
+  bookingForm!:FormGroup;
 
 }
