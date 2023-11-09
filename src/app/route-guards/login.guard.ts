@@ -1,4 +1,4 @@
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, CanMatchFn, Router } from '@angular/router';
 import { LoginService } from '../login/login-service/login.service';
 import { inject } from '@angular/core';
 
@@ -11,4 +11,9 @@ const router = inject(Router);
   
 return loginService.isValidUser ? true : router.navigateByUrl('/login'); 
 };
+
+export const canMatchloginGuard:CanMatchFn =(route,state) =>{
+    let loginService = inject(LoginService);
+    return loginService.isValidUser
+}
   

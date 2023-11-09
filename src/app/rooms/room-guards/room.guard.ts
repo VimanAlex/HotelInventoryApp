@@ -7,3 +7,4 @@ export const roomGuard: CanActivateChildFn = (childRoute, state) => {
   let loginService = inject(LoginService);
   return loginService.isAdmin;
 };
+

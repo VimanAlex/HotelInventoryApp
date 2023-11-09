@@ -6,14 +6,14 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { RoomBookingComponent } from './rooms/room-booking/room-booking.component';
 import { RoomAddComponent } from './rooms/room-add/room-add.component';
 import { LoginComponent } from './login/login.component';
-import { loginGuard } from './route-guards/login.guard';
+import { canMatchloginGuard, loginGuard } from './route-guards/login.guard';
 
 const routes: Routes = [  
   {path:'employee',component: EmpoyeeComponent, canActivate:[loginGuard]},
   {path:'login',component:LoginComponent},
   {path:'rooms',loadChildren:()=> import('./rooms/rooms.module').then(m=>m.RoomsModule), canActivate:[loginGuard]}, // add lazy loadyng for rooms module
   {path:'', redirectTo:'/login',pathMatch:'full'}, // default path
-  {path: 'booking', loadChildren: () => import('./booking/booking.module').then(m => m.BookingModule), canActivate:[loginGuard] },
+  {path: 'booking', loadChildren: () => import('./booking/booking.module').then(m => m.BookingModule), canActivate:[loginGuard], },
   {path:'**',component:NotfoundComponent} // when the path is incorect 
   
 ];
