@@ -12,8 +12,5 @@ const router = inject(Router);
 return loginService.isValidUser ? true : router.navigateByUrl('/login'); 
 };
 
-export const canMatchloginGuard:CanMatchFn =(route,state) =>{
-    let loginService = inject(LoginService);
-    return loginService.isValidUser
-}
+
   

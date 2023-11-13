@@ -1,1 +1,184 @@
 <p>booking works!</p>
+
+{{ bookingForm.value | json }}
+Pristine : {{ bookingForm.pristine }} Dirty : {{ bookingForm.dirty }}
+
+<form [formGroup]="bookingForm" (ngSubmit)="addBooking()">
+  <mat-form-field class="example-full-width">
+    <mat-label>Room Id</mat-label>
+    <input
+      formControlName="roomId"
+      type="number"
+      matInput
+      placeholder="Room Id"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Guest Name</mat-label>
+    <input
+      formControlName="guestName"
+      matInput
+      type="text"
+      placeholder="Guest Name"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Mobile Number</mat-label>
+    <input
+      formControlName="mobileNumber"
+      type="number"
+      matInput
+      placeholder="Mobile Number"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Booking Amount</mat-label>
+    <input
+      formControlName="bookingAmount"
+      type="number"
+      matInput
+      placeholder="Booking Amount"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Guest Email</mat-label>
+    <input
+      formControlName="guestEmail"
+      type="email"
+      matInput
+      placeholder="Email"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Check-in Date</mat-label>
+    <input
+      matInput
+      [matDatepicker]="checkinPicker"
+      formControlName="checkinDate"
+      placeholder="MM/DD/YYYY"
+    />
+    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+    <mat-datepicker-toggle
+      matIconSuffix
+      [for]="checkinPicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #checkinPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Check-out Date</mat-label>
+    <input
+      matInput
+      [matDatepicker]="checkoutPicker"
+      formControlName="checkoutDate"
+      placeholder="MM/DD/YYYY"
+    />
+    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+    <mat-datepicker-toggle
+      matIconSuffix
+      [for]="checkoutPicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #checkoutPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Booking Date</mat-label>
+    <input
+      matInput
+      [matDatepicker]="bookingPicker"
+      formControlName="bookingDate"
+      placeholder="MM/DD/YYYY"
+    />
+    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+    <mat-datepicker-toggle
+      matIconSuffix
+      [for]="bookingPicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #bookingPicker></mat-datepicker>
+  </mat-form-field>
+
+  <div formGroupName="addresses">
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Addresses </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-form-field class="mat-expansion-panel">
+          <mat-label>Address Line1</mat-label>
+          <input
+            formControlName="addressLine1"
+            matInput
+            type="text"
+            placeholder="Address Line1"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="mat-expansion-panel">
+          <mat-label>Address Line2</mat-label>
+          <input
+            formControlName="addressLine2"
+            matInput
+            type="text"
+            placeholder="Address Line2"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="mat-expansion-panel">
+          <mat-label>City</mat-label>
+          <input
+            formControlName="city"
+            type="text"
+            matInput
+            placeholder="City"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="mat-expansion-panel">
+          <mat-label>State</mat-label>
+          <input
+            formControlName="state"
+            type="text"
+            matInput
+            placeholder="State"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="mat-expansion-panel">
+          <mat-label>Country</mat-label>
+          <input
+            formControlName="country"
+            type="text"
+            matInput
+            placeholder="Country"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="mat-expansion-panel">
+          <mat-label>Zip Code</mat-label>
+          <input
+            formControlName="zipCode"
+            type="text"
+            matInput
+            placeholder="Zip Code"
+          />
+        </mat-form-field>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <br />
+  <button
+    type="submit"
+    mat-raised-button
+    color="primary"
+    [disabled]="bookingForm.invalid"
+  >
+    Add Booking
+  </button>
+</form>
