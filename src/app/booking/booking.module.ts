@@ -10,7 +10,7 @@ import {MatInputModule} from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatExpansionModule} from '@angular/material/expansion';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatInputModule,
     MatNativeDateModule,
     MatButtonModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCheckboxModule
     
   ]
 })

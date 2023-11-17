@@ -1,4 +1,4 @@
-<p>booking works!</p>
+<h2>Booking Room</h2>>
 
 {{ bookingForm.value | json }}
 Pristine : {{ bookingForm.pristine }} Dirty : {{ bookingForm.dirty }}
@@ -102,7 +102,7 @@ Pristine : {{ bookingForm.pristine }} Dirty : {{ bookingForm.dirty }}
     <mat-datepicker #bookingPicker></mat-datepicker>
   </mat-form-field>
 
-  <div formGroupName="addresses">
+  <div [formGroupName]="'addresses'">
     <mat-accordion class="example-headers-align" multi>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -169,10 +169,72 @@ Pristine : {{ bookingForm.pristine }} Dirty : {{ bookingForm.dirty }}
           />
         </mat-form-field>
       </mat-expansion-panel>
-    </mat-accordion>
+    </mat-accordion>  
   </div>
+  <br/>
 
-  <br />
+  <div>
+    <button type="button" mat-raised-button color="primary" (click)="addGuest()">Add Guest</button>
+  </div>  
+
+  <!-- Acordion cu controalele dinamice  -->
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Guests </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div formArrayName="guestList">  <!-- Iterare controale din array -->
+        <div *ngFor="let guest of guestControl.controls; let i = index">
+          <div [formGroupName]="i">
+            <mat-form-field class="example-full-width">
+              <mat-label>Guest Name</mat-label> 
+              <input formControlName="guestName"
+                      type="text"
+                      matInput
+                      placeholder="Guest Name"
+              />
+            </mat-form-field>
+            
+            <mat-form-field class="example-full-width">
+              <mat-label>Guest Age</mat-label>
+              <input formControlName="age"
+                     type="number"
+                     matInput
+                     placeholder="Guest Age"
+              />
+            </mat-form-field>
+
+            <button type="button" mat-raised-button color="primary" (click)="removeGuest(i)">Remove Guest</button>
+         
+          </div> 
+          <br/>     
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion> 
+  <br/>
+
+    <div >
+      <button type="button" mat-raised-button color="primary" (click)="addPassport()">Add Passport</button>
+      <button type="button" mat-raised-button color="primary" (click)="deletePassport()">Delete Passport</button>
+    </div>
+
+  <div *ngIf="bookingForm.get('passport')">
+    <mat-form-field class="example-full-width">
+      <mat-label>Passport</mat-label>
+      <input formControlName="passport"
+             type="text"
+             matInput
+             placeholder="Passport"
+      />
+    </mat-form-field>
+    <br/>
+  </div>
+  <mat-checkbox class="example-margin" formControlName="termAndConditions">T&C</mat-checkbox>
+
+ <br />
+ <br/>
   <button
     type="submit"
     mat-raised-button
