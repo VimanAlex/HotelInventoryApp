@@ -3,7 +3,7 @@ import { RoomList } from '../rooms';
 import { APP_SERVICE_CONFIG } from 'src/app/AppConfig/appconfig.service';
 import { AppConfig } from 'src/app/AppConfig/appconfig.interface';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { shareReplay } from 'rxjs';
+import { map, shareReplay } from 'rxjs';
 
 
 @Injectable({

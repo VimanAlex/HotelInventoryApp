@@ -21,7 +21,12 @@ Pristine : {{ bookingForm.pristine }} Dirty : {{ bookingForm.dirty }}
       matInput
       type="text"
       placeholder="Guest Name"
+      
     />
+    <!-- display message error for react form validators with Angular Material -->
+    <mat-error *ngIf="bookingForm.get('guestName')?.hasError('minlength')">
+      Guest Name shuld have minimum 5 characters !
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
@@ -32,6 +37,9 @@ Pristine : {{ bookingForm.pristine }} Dirty : {{ bookingForm.dirty }}
       matInput
       placeholder="Mobile Number"
     />
+    <mat-error *ngIf="bookingForm.get('mobileNumber')?.hasError('min')">
+      Mobile number must have minimum 10 numbers !
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
@@ -117,6 +125,11 @@ Pristine : {{ bookingForm.pristine }} Dirty : {{ bookingForm.dirty }}
             type="text"
             placeholder="Address Line1"
           />
+
+          <!-- Display an error message using validators when a reactive form has nested form -->
+          <mat-error *ngIf="bookingForm.get('addresses.addressLine1')?.hasError('required')">
+            Address Line1 is required !
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="mat-expansion-panel">
@@ -195,6 +208,11 @@ Pristine : {{ bookingForm.pristine }} Dirty : {{ bookingForm.dirty }}
                       placeholder="Guest Name"
               />
             </mat-form-field>
+
+            <!-- Display an error message using validators when a reactive form has formArray -->
+            <mat-error *ngIf="bookingForm.get(['guestList',i,'guestName'])?.hasError('required')">
+              Guest Name is required !
+            </mat-error>
             
             <mat-form-field class="example-full-width">
               <mat-label>Guest Age</mat-label>

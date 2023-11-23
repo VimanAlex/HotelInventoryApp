@@ -21,8 +21,10 @@
                required
                minlength="3"
                maxlength="20"
-               pattern=""  
-               />             
+               pattern="" 
+               [ngModelOptions]="{updateOn:'blur'}"               
+               /><!--folosit pentru a updata schibarea valorilor dintr-un control 
+                doar atunci cand nu mai suntem in interiorul controlului-->       
     </div>
 
     <div class="form-group">

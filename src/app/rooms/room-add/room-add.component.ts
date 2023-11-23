@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RoomList } from '../rooms';
 import { RoomsService } from '../rooms-services/rooms.service';
 import { NgForm } from '@angular/forms';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'hinv-room-add',
