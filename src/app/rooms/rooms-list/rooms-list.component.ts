@@ -9,8 +9,9 @@ import { RoomList } from '../rooms';
 })
 export class RoomListComponent implements OnInit,OnChanges,OnDestroy {
 
-  @Input() rooms:RoomList[] | null = [];
+  @Input() rooms:RoomList[] = [];
   @Input() roomsListTitle:string = 'Rooms List';
+  @Input() price:number | null = 0;
 
   @Output() selectedRoom = new EventEmitter<RoomList>();
 

@@ -8,7 +8,7 @@ import { roomGuard } from './room-guards/room.guard';
 const routes: Routes = [
   {path:'', component: RoomsComponent,canActivateChild:[roomGuard],children:[
   {path:'add',component:RoomAddComponent}, // add nested router
-  {path:':id',component:RoomBookingComponent},
+  // {path:'booking:id',component:RoomBookingComponent},
    // child route
   ]},
   //{path:'rooms/add',component:RoomAddComponent},

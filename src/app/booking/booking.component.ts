@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { fromEvent, mergeMap, switchMap } from 'rxjs';
+import { Observable, fromEvent, map, mergeMap, switchMap } from 'rxjs';
 import { BookingService } from './booking.service';
 import { CustomValidators } from './Validators/custom-validators';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -23,18 +24,20 @@ export class BookingComponent implements OnInit {
     })
   }
 
-  constructor(private formBuilder: FormBuilder, private bookinService:BookingService) {}
+  constructor(private formBuilder: FormBuilder, private bookinService:BookingService,private router:ActivatedRoute) {}
 
   ngOnInit(): void {
+
+   const roomId = this.router.snapshot.paramMap.get('roomid');
     // creare formGroup , proprietati , nested forms, formArray
     this.bookingForm = this.formBuilder.group({
       bookingId: new FormControl(''),
-      roomId: new FormControl({ value: '2', disabled: true }),
+      roomId: new FormControl({value:roomId,disabled: true }),
       guestEmail: new FormControl('',{updateOn:'blur' ,validators:[Validators.email,Validators.required]}), // updateOn: 'blur' - datele se updateaza doar atunci cand iesim din cadrul controlerului
       checkinDate: new FormControl(''),
       checkoutDate: new FormControl(''),
       bookingAmount: new FormControl('',{validators:[Validators.required]}),
-      guestName: new FormControl('',{validators:[Validators.minLength(5),Validators.required,CustomValidators.ValidateName]}),
+      guestName: new FormControl('',{validators:[Validators.minLength(5),Validators.required,CustomValidators.ValidateName,CustomValidators.ValidateSpecialCharacter('!')]}),
       bookingDate: new FormControl({value:new Date(),disabled:false}),
       mobileNumber: new FormControl('',{validators:[Validators.min(1000000000),Validators.required]}),
       addresses: this.formBuilder.group({ // neasted form
@@ -50,13 +53,12 @@ export class BookingComponent implements OnInit {
         this.addGuestControl()
       ]),
       termAndConditions: new FormControl(false,{validators:[Validators.required,Validators.requiredTrue]}) // requiredTreu folosit pentru checkbox , 
-                                                                                                          //checkbox-ul trebuie sa fie true ca sa fie valid ,
-                                                                                                          // use case : T&C
+                                                                                                          //checkbox-ul trebuie sa fie true ca sa fie valid ,                                                                                                         // use case : T&C
       //{updateOn:'blur'});  folosim updateOn dupa creearea formului daca dorim ca aceasta actiun
       // sa se aplice pentru fiecare control din form              
-    });
+    },{updateOn:'blur',validators:[CustomValidators.ValidateDate]});
 
-    this.getBookingFormData(); // metoda se apeleaza dupa construirea formului in ngOnInit()
+    this.getBookingFormData(roomId); // metoda se apeleaza dupa construirea formului in ngOnInit()
     
     // valueChanges - ne permite sa primim sa avem acces in timp real la valorile 
     //introduse/schimbate din form in timp real
@@ -82,7 +84,6 @@ export class BookingComponent implements OnInit {
     // in cazul in care folosim doar proprietatea value , atunci valoarea  controlul cu disabled = true,nu i se va face submit ;
     
     this.bookingForm.reset({
-      bookingId:'',
       roomId: '',
       guestEmail: '',
       checkinDate: '',
@@ -125,13 +126,12 @@ export class BookingComponent implements OnInit {
     this.guestControl.removeAt(index);
   }
 
-  getBookingFormData(){
+  getBookingFormData(roomId:string | null){
     // pentru a seta valori default in form (data from api)
     // setValue - folosim atunci cand vrem ca toate controalele sa aiba valori default (toate controalele)
     //patchValue - ne permite sa adaugam valori default doar la controalele selectate de noi (unele controale)
     return this.bookingForm.patchValue({
-      bookingId:'',
-      roomId: '',
+      roomId: roomId,
       guestEmail: 'test@gmail.com',
       checkinDate: '',
       checkoutDate: '',

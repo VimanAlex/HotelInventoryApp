@@ -15,8 +15,9 @@
         </tr>
         <!-- [ngStyle]="{'color': rooms.availableRooms ? 'green' : 'red'}" inline style -->
         <tr [ngClass]="odd ? 'odd' : 'even'"       
-            *ngFor="let room of rooms ; let i = index ; let odd = odd; let even = even ">
-           
+            *ngFor="let room of rooms | roomPriceFilter : price ; let i = index ; let odd = odd; let even = even ">
+                                       <!-- roomPriceFilter este un custom pipe creeat pentru a filtra datele din roomList array[]
+                                        vezi roomPricefilter pentru a vedea cum se creeaza un custom pipe -->
             <td>{{i}}</td>          
             <td>{{room.roomNumber}}</td>
             <td>{{room.roomType}}</td>
@@ -27,7 +28,7 @@
             <td>{{room.rating | number : "1.2-4"}}</td>
             <td>
                 <!-- <button class="btn btn-warning" (click)="selectRoom(room)">Select</button> -->
-                <button class="btn btn-warning" [routerLink]="['/rooms',room.roomNumber]">Book Room</button>
+                <button class="btn btn-warning" [routerLink]="['/booking',room.roomNumber]">Book Room</button>
             </td>
         </tr>
     </table>

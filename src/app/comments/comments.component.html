@@ -1,0 +1,59 @@
+<h2>Comments Section</h2>
+
+<br/>
+
+<table mat-table [dataSource]="commentsStream$" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+    
+    <!-- Name Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="postId">
+        <th mat-header-cell *matHeaderCellDef> Post Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.postId}} </td>
+      </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="body">
+        <th mat-header-cell *matHeaderCellDef> Body </th>
+        <td mat-cell *matCellDef="let element"> {{element.body}} </td>
+      </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+<!-- <table class="table">
+  <tr>
+    <th>Post Id</th>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Body</th>
+  </tr>
+
+  <tr *ngFor="let comment of comments$ | async">
+    <th>{{comment.postId}}</th>
+    <th>{{comment.id}}</th>
+    <th>{{comment.name}}</th>
+    <th>{{comment.email}}</th>
+    <th>{{comment.body }}</th>
+  </tr>
+</table> -->

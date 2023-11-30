@@ -5,6 +5,7 @@ import { RoomsService } from './rooms-services/rooms.service';
 import { Observable, Subject, Subscription, catchError, map, of } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 import { ConfigService } from '../services/config.service';
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'hinv-rooms',
   templateUrl: './rooms.component.html',
@@ -34,6 +35,8 @@ export class RoomsComponent implements OnInit,AfterViewInit,AfterViewChecked, On
       return of([]);
     })
   )
+
+  priceFilter = new FormControl({value:0,disabled:false});
 
   countRooms$ = this.roomsService.getRooms$.pipe(
     map(rooms => rooms.length)

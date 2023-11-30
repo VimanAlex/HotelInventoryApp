@@ -2,14 +2,14 @@
 
 <hinv-header></hinv-header>
 
-<div *ngIf="hiddenRooms">
+<!-- <div *ngIf="hiddenRooms">
     <h2>Welcome to {{hotelName}}</h2>
     <h3>Number of free rooms : <span [innerHTML]="numberOfRooms"></span></h3>
 </div>
 
 <div *ngIf="selectedRoom">
     Price Room Selected : {{selectedRoom.rating}}
-</div>
+</div> -->
 
 <router-outlet></router-outlet>
 
@@ -19,12 +19,19 @@
 <br/>
 <br/>
 
-<div>
-   <!-- Error :  {{getError$ | async}} -->
+ <!-- <div>
+   Error :  {{getError$ | async}} 
    Number of rooms : {{countRooms$ | async}}
+</div> -->
+
+{{priceFilter | json}}
+<div>
+    <h4>Price Filter</h4>
+    <input type="number" class="form-control" [formControl]="priceFilter"/>
 </div>
 <div *ngIf="rooms$ | async as rooms">
     <hinv-rooms-list [rooms]="rooms"
+    [price]="priceFilter.value"
      (selectedRoom)="selectRoom($event)"
      [roomsListTitle]="roomListTitle">
     </hinv-rooms-list>

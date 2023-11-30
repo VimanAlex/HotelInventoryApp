@@ -23,6 +23,7 @@ Pristine : {{ bookingForm.pristine }} Dirty : {{ bookingForm.dirty }}
       placeholder="Guest Name"
       
     />
+    {{bookingForm.get('guestName')?.errors | json}}
     <!-- display message error for react form validators with Angular Material -->
     <mat-error *ngIf="bookingForm.get('guestName')?.hasError('minlength')">
       Guest Name shuld have minimum 5 characters !

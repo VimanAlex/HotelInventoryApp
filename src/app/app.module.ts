@@ -21,6 +21,7 @@ import { LoginComponent } from './login/login.component';
 import { HoverDirective } from './hover.directive';
 import { EmailvalidatorDirective } from './emailvalidator/emailvalidator.directive';
 import { RouteConfigToken } from './services/routeConfig.service';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 // import { RoomsModule } from './rooms/rooms.module';
 
 
@@ -51,7 +52,7 @@ function initFactory(initService:InitService){
     MatIconModule,
     MatListModule,
     FormsModule,
-   
+    MatSnackBarModule
   ],
   providers: [
     {

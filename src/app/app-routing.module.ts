@@ -11,9 +11,10 @@ import { loginGuard } from './route-guards/login.guard';
 const routes: Routes = [  
   {path:'login',component:LoginComponent},
   {path:'employee',component: EmpoyeeComponent, /*canActivate:[loginGuard]*/},
-  {path:'booking', loadChildren: () => import('./booking/booking.module').then(m => m.BookingModule),  /*canActivate:[loginGuard]*/ },
+  {path:'booking/:roomid', loadChildren: () => import('./booking/booking.module').then(m => m.BookingModule),  /*canActivate:[loginGuard]*/ },
   {path:'rooms',loadChildren:()=> import('./rooms/rooms.module').then(m=>m.RoomsModule),  /*canActivate:[loginGuard]*/}, // add lazy loadyng for rooms module
-  {path:'', redirectTo:'/login',pathMatch:'full'}, // default path
+  {path:'', redirectTo:'/login',pathMatch:'full'},
+  { path: 'comments', loadChildren: () => import('./comments/comments.module').then(m => m.CommentsModule) }, // default path
   {path:'**',component:NotfoundComponent}// when the path is incorect 
  
 ];
